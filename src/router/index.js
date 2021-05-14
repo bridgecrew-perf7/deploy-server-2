@@ -7,13 +7,21 @@ router.get('/test', (req, res, next)=> {
     res.send('deploy server is fine')
 })
 
+const createFolder = (name) => {
+  const outputFolder = `${outputFolder}/${name}`
+  if (!fs.existsSync(outputFolder)) {
+    fs.mkdirSync(outputFolder)
+  }
+}
+
+
 router.post('/deploy', (req, res, next)=> {
   const outputFolder = process.env['OUTPUT_FOLDER']
-
   const b = Buffer.from(req.body.data, 'binary')
   const name = req.query.name
-  const output = `${outputFolder}/${name}.tar.gz`
-  fs.writeFileSync(output, b)
+  createFolder(name)
+  const fileName = `${outputFolder}/${name}/${name}.tar.gz`
+  fs.writeFileSync(fileName, b)
   res.json({
     status: 'ok'
   })
