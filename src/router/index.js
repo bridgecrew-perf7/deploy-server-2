@@ -2,8 +2,6 @@ import { Router } from 'express'
 import fs from 'fs'
 const router = Router()
 
-console.log('out', outputFolder)
-
 router.get('/test', (req, res, next)=> {
     console.log('get test')
     res.send('deploy server is fine')
