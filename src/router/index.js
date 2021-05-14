@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import fs from 'fs'
+import { exec } from 'child_process'
+
 const router = Router()
 
 router.get('/test', (req, res, next)=> {
@@ -15,6 +17,20 @@ const createFolder = (deployFolder, name) => {
   return outputFolder
 }
 
+const runCmd = (cmd) => {
+  exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+          console.log(`error: ${error.message}`);
+          return;
+      }
+      // if (stderr) {
+      //     console.log(`stderr: ${stderr}`);
+      //     return;
+      // }
+      console.log(`run: ${stdout}`);
+   });
+}
+
 
 router.post('/deploy', (req, res, next)=> {
   try {
@@ -24,6 +40,8 @@ router.post('/deploy', (req, res, next)=> {
     const outputFolder = createFolder(deployFolder, name)
     const fileName = `${outputFolder}/${name}.tar.gz`
     fs.writeFileSync(fileName, b)
+    const cmd = `echo 5566 | sudo -S docker exec ${name} bash restart.sh`
+    runCmd(cmd)
     res.json({
       status: 'ok',
       msg: 'upload complete'
