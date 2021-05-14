@@ -12,7 +12,6 @@ router.get('/test', (req, res, next)=> {
 router.post('/deploy', (req, res, next)=> {
   const b = Buffer.from(req.body.data)
   const name = req.query.name
-  console.log('p', p, 'name', name)
   const output = `deploy/${name}.tar.gz`
   fs.writeFileSync(output, b)
   res.json({
