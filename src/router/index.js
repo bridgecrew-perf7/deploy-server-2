@@ -8,7 +8,7 @@ router.get('/test', (req, res, next)=> {
 })
 
 const createFolder = (deployFolder, name) => {
-  const outputFolder = `${outputFolder}/${name}`
+  const outputFolder = `${deployFolder}/${name}`
   if (!fs.existsSync(outputFolder)) {
     fs.mkdirSync(outputFolder)
   }
