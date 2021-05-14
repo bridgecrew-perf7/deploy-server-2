@@ -2,7 +2,7 @@ import { Router } from 'express'
 import fs from 'fs'
 const router = Router()
 
-
+console.log('out', outputFolder)
 
 router.get('/test', (req, res, next)=> {
     console.log('get test')
@@ -10,9 +10,11 @@ router.get('/test', (req, res, next)=> {
 })
 
 router.post('/deploy', (req, res, next)=> {
+  const outputFolder = process.env['OUTPUT_FOLDER']
+
   const b = Buffer.from(req.body.data)
   const name = req.query.name
-  const output = `deploy/${name}.tar.gz`
+  const output = `${outputFolder}/${name}.tar.gz`
   fs.writeFileSync(output, b)
   res.json({
     status: 'ok'
