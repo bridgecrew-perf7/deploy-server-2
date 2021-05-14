@@ -22,7 +22,7 @@ router.post('/deploy', (req, res, next)=> {
     const b = Buffer.from(req.body.data, 'binary')
     const name = req.query.name
     const outputFolder = createFolder(deployFolder, name)
-    const fileName = `${outputFolder}/${name}/${name}.tar.gz`
+    const fileName = `${outputFolder}/${name}.tar.gz`
     fs.writeFileSync(fileName, b)
     res.json({
       status: 'ok',
