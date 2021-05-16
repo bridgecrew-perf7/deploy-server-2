@@ -36,11 +36,13 @@ router.post('/deployServer', (req, res, next)=> {
   try {
     const deployFolder = process.env['DEPLOY_FOLDER']
     const b = Buffer.from(req.body.data, 'binary')
-    const name = req.query.name
+    const name = req.query.name // name is for pm2
     const outputFolder = createFolder(deployFolder, name)
     const fileName = `${outputFolder}/${name}.tar.gz`
     fs.writeFileSync(fileName, b)
-    const cmd = `echo 5566 | sudo -S docker exec ${name} bash restart.sh`
+    // const cmd = `echo 5566 | sudo -S docker exec ${name} bash restart.sh`
+    const cmd = `echo 5566 | sudo -S docker exec ${name} bash storage/restart.sh`
+
     runCmd(cmd)
     res.json({
       status: 'ok',
