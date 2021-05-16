@@ -41,7 +41,7 @@ router.post('/deployServer', (req, res, next)=> {
     const fileName = `${outputFolder}/${name}.tar.gz`
     fs.writeFileSync(fileName, b)
     // const cmd = `echo 5566 | sudo -S docker exec ${name} bash restart.sh`
-    const cmd = `echo 5566 | sudo -S docker exec ${name} bash storage/restart.sh`
+    const cmd = `echo 5566 | sudo -S docker exec ${name} bash app/storage/restart.sh`
 
     runCmd(cmd)
     res.json({
